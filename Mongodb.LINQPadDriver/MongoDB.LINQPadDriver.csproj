@@ -8,6 +8,13 @@
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>NETCORE</DefineConstants>
+    <Authors>mkjeff</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/mkjeff/Mongodb.LINQPadDriver</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mkjeff/Mongodb.LINQPadDriver</RepositoryUrl>
+    <Description>MongoDB LINQPad driver</Description>
+    <Title>MongoDB LINQPad driver</Title>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LINQPad.Reference" Version="1.1.0" />

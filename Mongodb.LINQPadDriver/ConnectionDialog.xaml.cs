@@ -11,7 +11,7 @@ namespace MongoDB.LINQPadDriver
     /// </summary>
     public partial class ConnectionDialog : Window
     {
-        private IConnectionInfo _cxInfo;
+        private readonly IConnectionInfo _cxInfo;
 
         public ConnectionDialog(IConnectionInfo cxInfo)
         {
