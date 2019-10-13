@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+		<TargetFrameworks>netcoreapp3.0</TargetFrameworks>
+    <UseWpf>true</UseWpf>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>linqpaddriver</PackageTags>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>NETCORE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="LINQPad.Reference" Version="1.1.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.9.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="ConnectionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="linqpad-samples\\*.*" />
+    <Folder Include="linqpad-samples\\" />
+  </ItemGroup>
+  <Target Name="PostBuild1" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /i/y/s &quot;$(TargetDir)*.*&quot; &quot;%25LocalAppData%25\\LINQPad\\Drivers\\DataContext\\NetCore\\$(TargetName)&quot;" />
+  </Target>
+</Project>
