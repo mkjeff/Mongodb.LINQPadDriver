@@ -26,9 +26,9 @@ namespace MongoDB.LINQPadDriver
             //};
         }
 
-        public override string Name => "MongoDB Driver";
+        public override string Name => "MongoDB Driver "+ Version;
         public override string Author => "mkjeff";
-        public override Version Version => new Version(1, 0, 2);
+        public override Version Version => new Version(1, 0, 3);
 
         public override bool AreRepositoriesEquivalent(IConnectionInfo c1, IConnectionInfo c2)
             => c1.DatabaseInfo.CustomCxString == c2.DatabaseInfo.CustomCxString
@@ -120,6 +120,7 @@ namespace {nameSpace}" +
     // The main typed data class. The user's queries subclass this, so they have easy access to all its members.
 	public class " + typeName + @"
 	{
+        public IMongoDatabase Database => _db;
         private IMongoDatabase _db;
         internal void Initial(IMongoDatabase db)
         {
