@@ -28,7 +28,7 @@ namespace MongoDB.LINQPadDriver
 
         public override string Name => "MongoDB Driver";
         public override string Author => "mkjeff";
-        public override Version Version => new Version(1, 0, 1);
+        public override Version Version => new Version(1, 0, 2);
 
         public override bool AreRepositoriesEquivalent(IConnectionInfo c1, IConnectionInfo c2)
             => c1.DatabaseInfo.CustomCxString == c2.DatabaseInfo.CustomCxString
