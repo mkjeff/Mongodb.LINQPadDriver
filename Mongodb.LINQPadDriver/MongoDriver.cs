@@ -79,7 +79,7 @@ namespace MongoDB.LINQPadDriver
                 });
 
             var client = new MongoClient(mongoClientSettings);
-            var mongoDatabase = client.GetDatabase("Sportsbook");
+            var mongoDatabase = client.GetDatabase(cxInfo.DatabaseInfo.Database);
 
             context.GetType().GetMethod("Initial", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(context, new[] { mongoDatabase });
         }
