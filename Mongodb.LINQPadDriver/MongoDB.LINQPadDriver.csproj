@@ -15,7 +15,7 @@
     <Description>MongoDB LINQPad driver</Description>
     <Title>MongoDB LINQPad driver</Title>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LINQPad.Reference" Version="1.1.0" />
@@ -27,12 +27,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="linqpad-samples\\*.*" />
     <None Remove="Connection.png" />
     <Content Include="Connection.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Folder Include="linqpad-samples\\" />
   </ItemGroup>
   <Target Name="PostBuild1" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /i/y/s &quot;$(TargetDir)*.*&quot; &quot;%25LocalAppData%25\\LINQPad\\Drivers\\DataContext\\NetCore\\$(TargetName)&quot;" />

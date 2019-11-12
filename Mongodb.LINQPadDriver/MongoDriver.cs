@@ -26,7 +26,7 @@ namespace MongoDB.LINQPadDriver
             //};
         }
 
-        public override string Name => "MongoDB Driver "+ Version;
+        public override string Name => "MongoDB Driver " + Version;
         public override string Author => "mkjeff";
         public override Version Version => typeof(MongoDriver).Assembly.GetName().Version;
 
@@ -104,6 +104,7 @@ namespace MongoDB.LINQPadDriver
             var client = new MongoClient(mongoClientSettings);
             var collections =
                 (from c in client.GetDatabase(cxInfo.DatabaseInfo.Database).ListCollectionNames().ToList()
+                 where char.IsUpper(c[0]) // ignore system collection
                  orderby c
                  select (collectionName: c, type: types.Contains(c) ? c : nameof(BsonDocument))
                  ).ToList();
