@@ -128,13 +128,13 @@ namespace {nameSpace}" +
             _db = db;
         }
     
-        private Lazy<IMongoCollection<T>> InitCollection<T>()
-            => new Lazy<IMongoCollection<T>>(()=>_db.GetCollection<T>(typeof(T).Name));
+        private Lazy<IMongoCollection<T>> InitCollection<T>(string collectionName)
+            => new Lazy<IMongoCollection<T>>(()=>_db.GetCollection<T>(collectionName));
         
         public " + typeName + @"()
         {
 " + string.Join("\n", collections.Select(c =>
-             $"_{c.collectionName} = InitCollection<{c.type}>();"))
+             $"_{c.collectionName} = InitCollection<{c.type}>(\"{c.collectionName}\");"))
 + @"}
 
 " + string.Join("\n",
