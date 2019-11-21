@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -17,13 +18,15 @@ namespace MongoDB.LINQPadDriver
         static MongoDriver()
         {
             // Uncomment the following code to attach to Visual Studio's debugger when an exception is thrown.
-            //AppDomain.CurrentDomain.FirstChanceException += (sender, args) =>
-            //{
-            //    if (args.Exception.StackTrace.Contains(typeof(MongoDriver).Namespace))
-            //    {
-            //        Debugger.Launch();
-            //    }
-            //};
+#if DEBUG
+            AppDomain.CurrentDomain.FirstChanceException += (sender, args) =>
+            {
+                if (args.Exception.StackTrace.Contains(typeof(MongoDriver).Namespace))
+                {
+                    Debugger.Launch();
+                }
+            };
+#endif
         }
 
         public override string Name => "MongoDB Driver " + Version;
@@ -45,8 +48,7 @@ namespace MongoDB.LINQPadDriver
             {
                 "MongoDB.Driver",
                 "MongoDB.Driver.Linq",
-                cxInfo.DatabaseInfo.Server,
-            };
+            }.Concat(cxInfo.DatabaseInfo.Server.Split(';'));
         }
 
         private static readonly HashSet<string> ExcludedCommand = new HashSet<string>
@@ -93,10 +95,12 @@ namespace MongoDB.LINQPadDriver
         public override List<ExplorerItem> GetSchemaAndBuildAssembly(
             IConnectionInfo cxInfo, AssemblyName assemblyToBuild, ref string nameSpace, ref string typeName)
         {
-            //Debugger.Launch();
-            var @namespace = cxInfo.DatabaseInfo.Server;
+#if DEBUG
+            Debugger.Launch();
+#endif
+            var @namespaces = cxInfo.DatabaseInfo.Server.Split(';');
             var types = LoadAssemblySafely(cxInfo.CustomTypeInfo.GetAbsoluteCustomAssemblyPath()).GetTypes()
-                .Where(a => a.Namespace == @namespace && a.IsPublic)
+                .Where(a => @namespaces.Contains(a.Namespace) && a.IsPublic)
                 .Select(a => a.Name)
                 .ToHashSet();
 
@@ -114,7 +118,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using {@namespace};
+{ string.Join(Environment.NewLine, @namespaces.Select(n => "using " + n + ";")) }
 
 namespace {nameSpace}" +
 @"{
@@ -139,8 +143,9 @@ namespace {nameSpace}" +
 
 " + string.Join("\n",
         collections.Select(c =>
-        $@"private readonly Lazy<IMongoCollection<{c.type}>> _{c.collectionName};
-           public IMongoCollection<{c.type}> {c.collectionName} => _{c.collectionName}.Value;"))
+        $@"
+            private readonly Lazy<IMongoCollection<{c.type}>> _{c.collectionName};
+            public IMongoCollection<{c.type}> {c.collectionName} => _{c.collectionName}.Value;"))
 + @"}	
 }";
 

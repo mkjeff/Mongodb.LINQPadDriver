@@ -24,7 +24,7 @@
             <Label Padding="0,0,0,1">Document Type Namespace:</Label>
         </DockPanel>
 
-        <TextBox Name="txtTypeName" Padding="2" Margin="0,1,0,9" Text="{Binding DatabaseInfo.Server}"/>
+        <TextBox Name="txtTypeName" Padding="2" Margin="0,1,0,9" ToolTip="';' separator for multiple" Text="{Binding DatabaseInfo.Server}"/>
 
         <DockPanel>
             <Label Padding="0,0,0,1">Connection URL:</Label>
