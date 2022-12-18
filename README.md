@@ -20,5 +20,6 @@ Setup connection
 
 **Note**
 > The collection type will be exposed as ```IMongoCollection<BsonDocument>``` if no type named as collection name had been found in the assembly.
+> The Collection has to start with Upper Case
 
 
